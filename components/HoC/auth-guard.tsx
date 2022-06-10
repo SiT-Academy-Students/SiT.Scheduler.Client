@@ -1,7 +1,11 @@
 import { useSession } from "next-auth/react";
 import React from "react";
 
-export function withAuthenticationGuard<TProps>(
+export interface IAuthenticationProps {
+	session: any;
+}
+
+export function withAuthenticationGuard<TProps extends IAuthenticationProps>(
 	Component: React.ComponentType<TProps>
 ): React.ComponentType<TProps> {
 	const ComponentWithAuthenticationGuard = (props: TProps): JSX.Element => {
@@ -11,7 +15,7 @@ export function withAuthenticationGuard<TProps>(
 			return <h1>Still loading</h1>;
 		} else if (session.status === "unauthenticated") {
 			return <UnauthorizedScreen />;
-		} else return <Component {...props} />;
+		} else return <Component {...props} session={session.data} />;
 	};
 
 	return ComponentWithAuthenticationGuard;
