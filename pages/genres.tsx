@@ -1,6 +1,5 @@
 import { useRequest } from "@hooks/useRequest";
 import { getGenres } from "@services/genre-service";
-import { NextPage } from "next";
 import { useCallback, useEffect } from "react";
 import {
 	IAuthenticationProps,

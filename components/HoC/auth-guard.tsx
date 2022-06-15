@@ -1,8 +1,9 @@
+import { Session } from "next-auth";
 import { useSession } from "next-auth/react";
 import React from "react";
 
 export interface IAuthenticationProps {
-	session: any;
+	session: Session;
 }
 
 export function withAuthenticationGuard<TProps extends IAuthenticationProps>(
