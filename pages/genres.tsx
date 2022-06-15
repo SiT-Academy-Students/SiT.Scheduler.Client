@@ -4,12 +4,17 @@ import { useCallback, useEffect } from "react";
 import {
 	IAuthenticationProps,
 	withAuthenticationGuard,
-} from "../components/HoC/auth-guard";
+} from "@components/HoC/auth-guard";
+import { IRequestConfig } from "@services/common-service";
 
 const GenresPage = ({ session }: IAuthenticationProps): JSX.Element => {
 	const gg = useCallback(
-		(abortController: AbortController) => {
-			return getGenres(session.accessToken, abortController);
+		(abortSignal: AbortSignal) => {
+			const config: IRequestConfig = {
+				abortSignal,
+				accessToken: session.accessToken,
+			};
+			return getGenres(config);
 		},
 		[session]
 	);

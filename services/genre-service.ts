@@ -1,13 +1,8 @@
-import Axios from "axios";
+import { OperationResult } from "utilities/operation-result";
+import { getAsync, IRequestConfig } from "./common-service";
 
-export async function getGenres(
-	accessToken: string,
-	abortController: AbortController
-): Promise<object> {
-	const url = "http://localhost:5120/genres";
-	const result = await Axios.get(url, {
-		headers: { Authorization: `Bearer ${accessToken}` },
-		signal: abortController.signal,
-	});
-	return result;
+export function getGenres(
+	config: IRequestConfig
+): Promise<OperationResult<object>> {
+	return getAsync("http://localhost:5120/genres", config);
 }

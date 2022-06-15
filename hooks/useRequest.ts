@@ -10,7 +10,7 @@ interface IRequestResult<TData> {
 }
 
 export function useRequest<TData>(
-	request: (abortControler: AbortController) => Promise<TData>
+	request: (abortSignal: AbortSignal) => Promise<TData>
 ): IRequestTrigger<TData> {
 	const latestAbortController = useRef<AbortController>();
 	const executeCallback = useCallback(async (): Promise<
@@ -21,7 +21,7 @@ export function useRequest<TData>(
 
 		const currentAbortController = new AbortController();
 		latestAbortController.current = currentAbortController;
-		const result = await request(currentAbortController);
+		const result = await request(currentAbortController.signal);
 
 		return {
 			data: result,
