@@ -5,4 +5,5 @@ export interface IRequestError {
 export type OperationResult<TData = never> = {
 	isSuccessful: boolean;
 	errors: IRequestError[];
-} & ([TData] extends [never] ? {} : { data: TData | undefined });
+	data?: TData | undefined;
+};

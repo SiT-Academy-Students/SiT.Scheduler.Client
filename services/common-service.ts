@@ -61,7 +61,7 @@ async function executeAsync<TResult>(
 		if (e instanceof AxiosError) errors = extractErrors(e);
 		else errors = [{ message: "Something wrong happened!" }];
 
-		operationResult = { isSuccessful: false, errors, data: undefined };
+		operationResult = { isSuccessful: false, errors };
 	}
 
 	return operationResult;

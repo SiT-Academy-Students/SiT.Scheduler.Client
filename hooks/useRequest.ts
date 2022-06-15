@@ -1,10 +1,10 @@
 import { useCallback, useRef } from "react";
 
-interface IRequestTrigger<TData> {
+export interface IRequestTrigger<TData> {
 	executeAsync: () => Promise<IRequestResult<TData>>;
 }
 
-interface IRequestResult<TData> {
+export interface IRequestResult<TData> {
 	data: TData;
 	isActive: boolean;
 }
