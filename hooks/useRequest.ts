@@ -1,16 +1,18 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
+import { Request } from "@hooks/types/Request";
+import { OperationResult } from "@utilities/operation-result";
 
 export interface IRequestTrigger<TData> {
 	executeAsync: () => Promise<IRequestResult<TData>>;
 }
 
 export interface IRequestResult<TData> {
-	data: TData;
+	data: OperationResult<TData>;
 	isActive: boolean;
 }
 
 export function useRequest<TData>(
-	request: (abortSignal: AbortSignal) => Promise<TData>
+	request: Request<TData>
 ): IRequestTrigger<TData> {
 	const latestAbortController = useRef<AbortController>();
 	const executeCallback = useCallback(async (): Promise<
@@ -29,7 +31,9 @@ export function useRequest<TData>(
 		};
 	}, [request]);
 
-	return {
-		executeAsync: executeCallback,
-	};
+	const trigger = useMemo(
+		(): IRequestTrigger<TData> => ({ executeAsync: executeCallback }),
+		[executeCallback]
+	);
+	return trigger;
 }

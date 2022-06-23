@@ -19,23 +19,18 @@ const GenresPage = ({ session }: IAuthenticationProps): JSX.Element => {
 		},
 		[session]
 	);
-	const getGenresRequest = useRequest(getGenresApiCall);
-
-	// Extract common state in a different hook and pass an argument so the `genres data accessor` is independent of stateand can be used safely as a dependency to `useEffect`.
-	const genresDataAccessor = useData(getGenresRequest);
+	const { executeAction, isLoading, errors, data } =
+		useData(getGenresApiCall);
 
 	useEffect((): void => {
-		genresDataAccessor.executeAction();
-	}, []);
+		executeAction();
+	}, [executeAction]);
 
-	console.log(genresDataAccessor);
 	return (
 		<>
-			<div>
-				Is loading: {genresDataAccessor.isLoading ? "True" : "False"}
-			</div>
-			<div>Errors: {genresDataAccessor.errors.map((e) => e.message)}</div>
-			<div>Result: {JSON.stringify(genresDataAccessor.data)}</div>
+			<div>Is loading: {isLoading ? "True" : "False"}</div>
+			<div>Errors: {errors.map((e) => e.message)}</div>
+			<div>Result: {JSON.stringify(data)}</div>
 		</>
 	);
 };

@@ -1,23 +1,18 @@
-import { useCallback, useRef, useState } from "react";
-import { IRequestError, OperationResult } from "utilities/operation-result";
-import { IRequestTrigger } from "./useRequest";
+import { useCallback, useState } from "react";
+import { IRequestError, OperationResult } from "@utilities/operation-result";
+import { Request } from "@hooks/types/Request";
+import { useRequest } from "@hooks/useRequest";
 
-export function useData<TData>(
-	requestTrigger: IRequestTrigger<OperationResult<TData>>
-) {
-	// const isInitialEffect = useRef<boolean>(true);
+export function useData<TData>(request: Request<TData>) {
+	const requestTrigger = useRequest(request);
 	const [isLoading, setIsLoading] = useState(true);
 	const [errors, setErrors] = useState<IRequestError[]>([]);
 	const [data, setData] = useState<TData | undefined>(undefined);
 
 	const executeActionInternally = useCallback(async (): Promise<void> => {
-		// if (isInitialEffect) {
-		// isInitialEffect.current = false;
-		// } else {
 		setIsLoading(true);
 		setErrors([]);
 		setData(undefined);
-		// }
 
 		const requestResult = await requestTrigger.executeAsync();
 		if (!requestResult.isActive) return;
