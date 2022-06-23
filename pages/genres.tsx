@@ -6,6 +6,7 @@ import {
 } from "@components/HoC/auth-guard";
 import { IRequestConfig } from "@services/common-service";
 import { useData } from "@hooks/useData";
+import { LoadingIndicator } from "@components/LoadingIndicator";
 
 const GenresPage = ({ session }: IAuthenticationProps): JSX.Element => {
 	const getGenresApiCall = useCallback(
@@ -27,7 +28,7 @@ const GenresPage = ({ session }: IAuthenticationProps): JSX.Element => {
 
 	return (
 		<>
-			<div>Is loading: {isLoading ? "True" : "False"}</div>
+			{isLoading && <LoadingIndicator />}
 			<div>Errors: {errors.map((e) => e.message)}</div>
 			<div>Result: {JSON.stringify(data)}</div>
 		</>

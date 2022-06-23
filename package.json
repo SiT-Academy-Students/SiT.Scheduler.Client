@@ -9,7 +9,10 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
-		"axios": "^0.27.2",
+		"@emotion/react": "11.9.3",
+		"@emotion/styled": "11.9.3",
+		"@mui/material": "5.8.5",
+		"axios": "0.27.2",
 		"next": "12.1.6",
 		"next-auth": "4.3.4",
 		"react": "18.1.0",
