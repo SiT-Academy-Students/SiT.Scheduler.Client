@@ -8,6 +8,18 @@ import { IRequestConfig } from "@services/common-service";
 import { useData } from "@hooks/useData";
 import { LoadingIndicator } from "@components/LoadingIndicator";
 import { ErrorsContainer } from "@components/ErrorHandling";
+import { DataGrid, GridColDef, GridColumns } from "@mui/x-data-grid";
+import { IGenre } from "@models/IGenre";
+import { Box } from "@mui/material";
+
+const columns: GridColDef<IGenre>[] = [
+	{ field: "name", headerName: "Name", width: 200 },
+	{
+		field: "description",
+		headerName: "Description",
+		width: 400,
+	},
+];
 
 const GenresPage = ({ session }: IAuthenticationProps): JSX.Element => {
 	const getGenresApiCall = useCallback(
@@ -30,7 +42,23 @@ const GenresPage = ({ session }: IAuthenticationProps): JSX.Element => {
 	return (
 		<>
 			{isLoading && <LoadingIndicator />}
-			<div>Result: {JSON.stringify(data)}</div>
+			{data && (
+				<Box
+					sx={(theme) => ({
+						height: "60vh",
+						my: theme.spacing(5),
+					})}
+				>
+					<DataGrid
+						sx={{
+							width: "80vw",
+							mx: "auto",
+						}}
+						columns={columns}
+						rows={data}
+					/>
+				</Box>
+			)}
 			<ErrorsContainer errors={errors} />
 		</>
 	);
