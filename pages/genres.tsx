@@ -7,6 +7,7 @@ import {
 import { IRequestConfig } from "@services/common-service";
 import { useData } from "@hooks/useData";
 import { LoadingIndicator } from "@components/LoadingIndicator";
+import { ErrorsContainer } from "@components/ErrorHandling";
 
 const GenresPage = ({ session }: IAuthenticationProps): JSX.Element => {
 	const getGenresApiCall = useCallback(
@@ -29,8 +30,8 @@ const GenresPage = ({ session }: IAuthenticationProps): JSX.Element => {
 	return (
 		<>
 			{isLoading && <LoadingIndicator />}
-			<div>Errors: {errors.map((e) => e.message)}</div>
 			<div>Result: {JSON.stringify(data)}</div>
+			<ErrorsContainer errors={errors} />
 		</>
 	);
 };
